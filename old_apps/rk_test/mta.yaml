@@ -1,0 +1,36 @@
+ID: rk_test
+_schema-version: '2.1'
+parameters:
+   deploy_mode: html5-repo
+version: 0.0.1
+
+modules:
+ - name: rk-test-approuter
+   type: approuter.nodejs
+   path: rk-test-approuter
+   parameters:
+      disk-quota: 256M
+      memory: 256M
+   requires:
+    - name: rk_test_html5_repo_runtime
+
+
+ - name: rk_test_ui_deployer
+   type: com.sap.html5.application-content
+   path: rk_test_ui_deployer
+   requires:
+    - name: rk_test_html5_repo_host
+
+resources:
+ - name: rk_test_html5_repo_runtime
+   parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+   type: org.cloudfoundry.managed-service
+
+ - name: rk_test_html5_repo_host
+   parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+   type: org.cloudfoundry.managed-service
+
